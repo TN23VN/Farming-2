@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "1079700856711",
+    "firebase_url": "https://farming-1e42e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "farming-1e42e",
+    "storage_bucket": "farming-1e42e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079700856711:ios:64d5f622490890e23e3d22",
+        "android_client_info": {
+          "package_name": "com.nbtrong.2dfarming"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT0dLipsm35YM_uA28jzdsxH9thcAUBts"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
