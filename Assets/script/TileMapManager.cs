@@ -15,20 +15,24 @@ public class TileMapManager : MonoBehaviour
     public Tilemap tm_Forest;
     public TileBase tb_Forest;
 
-    private Map map;
     private FirebaseDatabaseManager databaseManager;
-    private FirebaseUser user;
     private DatabaseReference reference;
     private void Start()
     {
-        map = new Map();
         databaseManager = GameObject.Find("DatabaseManager").GetComponent<FirebaseDatabaseManager>();
-        user = FirebaseAuth.DefaultInstance.CurrentUser;
-        //WriteAllTileMapToFirebase();
+        if (LoadDataManager.userInGame.MapInGame.lstTileMapDetail == null)
+        {
+            WriteAllTileMapToFirebase();
+        }
+        else
+        {
+            LoadMapForUser();
+        }
         FirebaseApp app = FirebaseApp.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
-        LoadMapForUser();
+        
     }
+
     public void WriteAllTileMapToFirebase()
     {
         List<TilemapDetail> tilemaps = new List<TilemapDetail>();
@@ -40,32 +44,13 @@ public class TileMapManager : MonoBehaviour
                 tilemaps.Add(tm_detail);
             }
         }
-        map = new Map(tilemaps);
-        Debug.Log(map.ToString());
-
-        databaseManager.WriteDatabase(user.UserId+ "/Map", map.ToString());
+        LoadDataManager.userInGame.MapInGame = new Map(tilemaps);
+        databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
     }
 
     public void LoadMapForUser()
     {
-        reference.Child("Users").Child(user.UserId + "/Map").GetValueAsync().ContinueWithOnMainThread(task=>
-        {
-            if (task.IsCanceled)
-            {
-                return;
-            }
-            else if (task.IsFaulted)
-            {
-                return;
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                map = JsonConvert.DeserializeObject<Map>(snapshot.Value.ToString());
-                Debug.Log(map.ToString());
-                MapToUI(map);
-            }
-        });
+        MapToUI(LoadDataManager.userInGame.MapInGame);
     }
     public void TileMapDetailToTileBase(TilemapDetail tilemapDetail)
     {
@@ -96,12 +81,12 @@ public class TileMapManager : MonoBehaviour
 
     public void SetStateForTilemapDetail(int x, int y, TilemapState state)
     {
-        for(int i = 0;i < map.GetLength();i++)
+        for(int i = 0;i < LoadDataManager.userInGame.MapInGame.GetLength();i++)
         {
-            if (map.lstTileMapDetail[i].x == x && map.lstTileMapDetail[i].y == y)
+            if (LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].x == x && LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].y == y)
             {
-                map.lstTileMapDetail[i].tilemapState = state;
-                databaseManager.WriteDatabase(user.UserId + "/Map", map.ToString());
+                LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].tilemapState = state;
+                databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
                 Debug.Log("Save to firebase!");
             }
         }

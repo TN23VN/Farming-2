@@ -22,6 +22,8 @@ public class FirebaseLoginManager : MonoBehaviour
     public GameObject loginForm;
     public GameObject registerForm;
 
+    private FirebaseDatabaseManager databaseManager;
+    private LoadDataManager loadDataManager;
     //Firebase Authentication -> đăng ký ,đăng nhập
     private FirebaseAuth auth;
     private void Start()
@@ -31,6 +33,8 @@ public class FirebaseLoginManager : MonoBehaviour
         buttonLogin.onClick.AddListener(SignInAccountWithFirebase);
         buttonMoveToLogin.onClick.AddListener(SwitchForm);
         buttonMoveToRegister.onClick.AddListener(SwitchForm);
+
+        databaseManager = GetComponent<FirebaseDatabaseManager>();
     }
     public void RegisterAccountWithFirebase()
     {
@@ -51,7 +55,12 @@ public class FirebaseLoginManager : MonoBehaviour
             else if (task.IsCompleted)
             {
                 Debug.Log("Dang ky thanh cong");
-                return;
+                Map mapInGame = new Map();  
+                User userInGame = new User("",100,50,mapInGame);
+                FirebaseUser firebaseUser = task.Result.User;
+                //loadDataManager.GetUserInGame();
+                databaseManager.WriteDatabase("Users/"+ firebaseUser.UserId, userInGame.ToString());
+                SceneManager.LoadScene("LoadingScene");
             }
         });
 
@@ -77,7 +86,7 @@ public class FirebaseLoginManager : MonoBehaviour
             {
                 Debug.Log("Dang nhap thanh cong");
                 FirebaseUser user = task.Result.User;
-                SceneManager.LoadScene("SampleScene");
+                SceneManager.LoadScene("LoadingScene");
             }
         });
     }
