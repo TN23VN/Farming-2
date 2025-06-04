@@ -7,6 +7,8 @@ public class UsernameWizard : MonoBehaviour
     public InputField txtUsername;
     public Button btnOKUsername;
     public Text username;
+    public Text gold;
+    public Text diamond;
 
     private FirebaseDatabaseManager databaseManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,6 +23,8 @@ public class UsernameWizard : MonoBehaviour
         else
         {
             username.text = LoadDataManager.userInGame.Name;
+            gold.text ="Gold: "+ LoadDataManager.userInGame.Gold.ToString();
+            diamond.text ="Diamond: "+ LoadDataManager.userInGame.Diamond.ToString();
         }
         btnOKUsername.onClick.AddListener(SetNewUsername);
     }
