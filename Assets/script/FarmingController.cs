@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,6 +12,9 @@ public class FarmingController : MonoBehaviour
     public TileBase tb_Ground;
     public TileBase tb_Grass;
     public TileBase tb_Forest;
+
+    public List<TileBase> lst_Potato;
+    //public List<TileBase> lst_ThuHoach;
 
     private RecyclableInventoryManager recyclableInventoryManager;
 
@@ -42,7 +47,8 @@ public class FarmingController : MonoBehaviour
             TileBase crrTileBase = tm_Grass.GetTile(cellPos);
             if (crrTileBase == null)
             {
-                tm_Grass.SetTile(cellPos, tb_Forest);
+                //tm_Grass.SetTile(cellPos, tb_Forest);
+                StartCoroutine(GrowPlant(cellPos , tm_Forest, lst_Potato));
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Forest);
             }
         }
@@ -50,19 +56,31 @@ public class FarmingController : MonoBehaviour
         {
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Forest.GetTile(cellPos);
-            if (crrTileBase = tb_Forest)
+            if (crrTileBase = lst_Potato[4])
             {
                 //set lai phan dat
                 tm_Grass.SetTile(cellPos, tb_Grass);
                 //thu hoach hoa
                 tm_Forest.SetTile(cellPos, null);
                 //them vao tui do
-                InventoryItems itemFlower = new InventoryItems();
-                itemFlower.name = "Bong hoa";
-                itemFlower.description = "Mot bong hoa xinh dep";
-                Debug.Log(itemFlower.ToString());
-                recyclableInventoryManager.AddInventoryItem(itemFlower);
+                InventoryItems itemPotato = new InventoryItems();
+                itemPotato.name = "Khoai tay";
+                itemPotato.description = "Cu khoai tay";
+                Debug.Log(itemPotato.ToString());
+                recyclableInventoryManager.AddInventoryItem(itemPotato);
+                tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
             }
+        }
+    }
+
+    IEnumerator GrowPlant(Vector3Int cellPos, Tilemap tilemap, List<TileBase> lstTileBase)
+    {
+        int crrStage = 0;
+        while (crrStage < lstTileBase.Count)
+        {
+            tilemap.SetTile(cellPos, lstTileBase[crrStage]);
+            yield return new WaitForSeconds(5);
+            crrStage++;
         }
     }
 }

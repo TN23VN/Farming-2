@@ -7,6 +7,8 @@ public enum TilemapState
     Ground,
     Grass,
     Forest,
+    Potato,
+    Grape
 }
 public class TilemapDetail
 {
