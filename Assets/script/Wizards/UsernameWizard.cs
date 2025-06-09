@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class UsernameWizard : MonoBehaviour
 {
     public GameObject usernameWizard;
+    public GameObject player;
     public InputField txtUsername;
     public Button btnOKUsername;
     public Text username;
@@ -19,6 +20,7 @@ public class UsernameWizard : MonoBehaviour
         if (LoadDataManager.userInGame.Name == "")
         {
             usernameWizard.SetActive(true);
+            player.SetActive(false);
         }
         else
         {
@@ -42,6 +44,9 @@ public class UsernameWizard : MonoBehaviour
             databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
             usernameWizard.SetActive(false);
             username.text = LoadDataManager.userInGame.Name;
+            gold.text = "Gold: " + LoadDataManager.userInGame.Gold.ToString();
+            diamond.text = "Diamond: " + LoadDataManager.userInGame.Diamond.ToString();
+            player.SetActive(true);
         }
     }
 }

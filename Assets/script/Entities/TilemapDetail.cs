@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -16,16 +17,19 @@ public class TilemapDetail
     public int y { get; set; }
     public TilemapState tilemapState { get; set; }
 
+    public DateTime ThoiGian { get; set; }
+
     public TilemapDetail()
     {
 
     }
 
-    public TilemapDetail(int x, int y, TilemapState tilemapState)
+    public TilemapDetail(int x, int y, TilemapState tilemapState , DateTime tgian)
     {
         this.x = x;
         this.y = y;
         this.tilemapState = tilemapState;
+        this.ThoiGian = tgian;
     }
     public override string ToString()
     {

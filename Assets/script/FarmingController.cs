@@ -49,7 +49,7 @@ public class FarmingController : MonoBehaviour
             {
                 //tm_Grass.SetTile(cellPos, tb_Forest);
                 StartCoroutine(GrowPlant(cellPos , tm_Forest, lst_Potato));
-                tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Forest);
+                tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
             }
         }
         if (Input.GetKeyDown(KeyCode.M))
@@ -66,20 +66,21 @@ public class FarmingController : MonoBehaviour
                 InventoryItems itemPotato = new InventoryItems();
                 itemPotato.name = "Khoai tay";
                 itemPotato.description = "Cu khoai tay";
-                Debug.Log(itemPotato.ToString());
+
+                //Debug.Log(itemPotato.ToString());
                 recyclableInventoryManager.AddInventoryItem(itemPotato);
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
             }
         }
     }
 
-    IEnumerator GrowPlant(Vector3Int cellPos, Tilemap tilemap, List<TileBase> lstTileBase)
+    public IEnumerator GrowPlant(Vector3Int cellPos, Tilemap tilemap, List<TileBase> lstTileBase)
     {
         int crrStage = 0;
         while (crrStage < lstTileBase.Count)
         {
             tilemap.SetTile(cellPos, lstTileBase[crrStage]);
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
             crrStage++;
         }
     }

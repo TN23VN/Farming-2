@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Firebase;
 using Firebase.Auth;
@@ -13,10 +14,13 @@ public class TileMapManager : MonoBehaviour
     public Tilemap tm_Grass;
     public Tilemap tm_Ground;
     public Tilemap tm_Forest;
+
     public TileBase tb_Forest;
+    public List<TileBase> lst_Potato;
 
     private FirebaseDatabaseManager databaseManager;
     private DatabaseReference reference;
+    public FarmingController farmingController;
     private void Start()
     {
         databaseManager = GameObject.Find("DatabaseManager").GetComponent<FirebaseDatabaseManager>();
@@ -40,7 +44,7 @@ public class TileMapManager : MonoBehaviour
         {
             for (int y = tm_Grass.cellBounds.min.y; y < tm_Grass.cellBounds.max.y; y++)
             {
-                TilemapDetail tm_detail = new TilemapDetail(x,y,TilemapState.Grass);
+                TilemapDetail tm_detail = new TilemapDetail(x,y,TilemapState.Grass, DateTime.Now);  
                 tilemaps.Add(tm_detail);
             }
         }
@@ -69,6 +73,35 @@ public class TileMapManager : MonoBehaviour
             tm_Grass.SetTile(cellPos, null);
             tm_Forest.SetTile(cellPos,tb_Forest);
         }
+        else if (tilemapDetail.tilemapState == TilemapState.Potato)
+        {
+            double elapsedTime = DateTime.Now.Subtract(tilemapDetail.ThoiGian).TotalSeconds;
+            
+            tm_Grass.SetTile(cellPos, null);
+
+            if (elapsedTime > 0 & elapsedTime <= 10)
+            {
+                tm_Forest.SetTile(cellPos, lst_Potato[0]);
+            }
+            else if (elapsedTime > 5 & elapsedTime <= 20)
+            {
+                tm_Forest.SetTile(cellPos, lst_Potato[1]);
+            }
+            else if (elapsedTime > 10 & elapsedTime <= 30)
+            {
+                tm_Forest.SetTile(cellPos, lst_Potato[2]);
+            }
+            else if (elapsedTime > 15 & elapsedTime <= 40)
+            {
+                tm_Forest.SetTile(cellPos, lst_Potato[3]);
+                farmingController.StartCoroutine(farmingController.GrowPlant(cellPos,tm_Forest,lst_Potato.GetRange(3,2)));
+            }
+            else
+            {
+                tm_Forest.SetTile(cellPos, lst_Potato[4]);
+            }
+
+        }
     }
 
     public void MapToUI(Map map)
@@ -87,7 +120,6 @@ public class TileMapManager : MonoBehaviour
             {
                 LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].tilemapState = state;
                 databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
-                Debug.Log("Save to firebase!");
             }
         }
     }
