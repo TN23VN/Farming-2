@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class DayAndNight : MonoBehaviour
 {
     public Text txtTime;
-    public float TimeSpeed = 3600;
+    public float TimeSpeed = 600;
+    public Light2D light2D;
+    public Gradient gradient;
 
     public void Update()
     {
@@ -16,5 +19,12 @@ public class DayAndNight : MonoBehaviour
         int gameMinutes = Mathf.FloorToInt((second / 3600) / 60);
         string timeFormat = string.Format("{0:00}:{1:00}",gameHours, gameMinutes);
         txtTime.text = timeFormat;
+
+        ChangeColorByTime(second);
     }
+
+    public void ChangeColorByTime(float time)
+    {
+        light2D.color = gradient.Evaluate(time / 86400);
+    }    
 }
