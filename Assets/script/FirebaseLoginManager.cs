@@ -58,8 +58,9 @@ public class FirebaseLoginManager : MonoBehaviour
                 Map mapInGame = new Map();  
                 User userInGame = new User("",100,50,mapInGame);
                 FirebaseUser firebaseUser = task.Result.User;
-                //loadDataManager.GetUserInGame();
                 databaseManager.WriteDatabase("Users/"+ firebaseUser.UserId, userInGame.ToString());
+
+                LoadingManager.next_scene = "SampleScene";
                 SceneManager.LoadScene("LoadingScene");
             }
         });
@@ -86,6 +87,8 @@ public class FirebaseLoginManager : MonoBehaviour
             {
                 Debug.Log("Dang nhap thanh cong");
                 FirebaseUser user = task.Result.User;
+
+                LoadingManager.next_scene = "SampleScene";
                 SceneManager.LoadScene("LoadingScene");
             }
         });

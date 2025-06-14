@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtTime: {fileID: 1455325974}
-  TimeSpeed: 600
+  TimeSpeed: 60
   light2D: {fileID: 619394801}
   gradient:
     serializedVersion: 2

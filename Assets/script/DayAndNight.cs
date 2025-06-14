@@ -6,18 +6,20 @@ using UnityEngine.UI;
 public class DayAndNight : MonoBehaviour
 {
     public Text txtTime;
-    public float TimeSpeed = 600;
+    public float TimeSpeed = 60f;
     public Light2D light2D;
     public Gradient gradient;
 
     public void Update()
     {
         DateTime time = DateTime.Now;
+
         float second = (time.Hour * 3600) + (time.Minute * 60) + time.Second;
-        second = (second * TimeSpeed) % 86400;
-        int gameHours = Mathf.FloorToInt(second / 3600);
-        int gameMinutes = Mathf.FloorToInt((second / 3600) / 60);
-        string timeFormat = string.Format("{0:00}:{1:00}",gameHours, gameMinutes);
+        second = (second * TimeSpeed) % 86400f;
+
+        int gameHours = Mathf.FloorToInt(second / 3600f);
+        int gameMinutes = Mathf.FloorToInt((second % 3600f) / 60f);
+        string timeFormat = string.Format("{0:00}:{1:00}", gameHours, gameMinutes);
         txtTime.text = timeFormat;
 
         ChangeColorByTime(second);
