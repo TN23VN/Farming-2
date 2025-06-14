@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class FarmingController : MonoBehaviour
 {
+    public Animator animation;
+
     public Tilemap tm_Ground;
     public Tilemap tm_Grass;
     public Tilemap tm_Forest;
@@ -21,7 +23,9 @@ public class FarmingController : MonoBehaviour
     public TileMapManager tileMapManager;
     private void Start()
     {
+        
         recyclableInventoryManager = GameObject.Find("InventoryManager").GetComponent<RecyclableInventoryManager>();
+        animation = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,6 +37,7 @@ public class FarmingController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            animation.SetBool("DaoDat",true);
             Vector3Int cellPos=tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Grass.GetTile(cellPos);
             if (crrTileBase = tb_Grass)
@@ -43,17 +48,18 @@ public class FarmingController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
+            animation.SetBool("TrongCay", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Grass.GetTile(cellPos);
             if (crrTileBase == null)
             {
-                //tm_Grass.SetTile(cellPos, tb_Forest);
                 StartCoroutine(GrowPlant(cellPos , tm_Forest, lst_Potato));
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
             }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
+            animation.SetBool("ThuHoach", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Forest.GetTile(cellPos);
             if (crrTileBase = lst_Potato[4])
@@ -67,10 +73,21 @@ public class FarmingController : MonoBehaviour
                 itemPotato.name = "Khoai tay";
                 itemPotato.description = "Cu khoai tay";
 
-                //Debug.Log(itemPotato.ToString());
                 recyclableInventoryManager.AddInventoryItem(itemPotato);
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
             }
+        }
+        if (Input.GetKeyUp(KeyCode.C)) 
+        {
+            animation.SetBool("DaoDat", false);
+        }
+        if (Input.GetKeyUp(KeyCode.V))
+        {
+            animation.SetBool("TrongCay", false);
+        }
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            animation.SetBool("ThuHoach", false);
         }
     }
 
