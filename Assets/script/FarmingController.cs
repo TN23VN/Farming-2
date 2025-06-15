@@ -40,9 +40,10 @@ public class FarmingController : MonoBehaviour
             animation.SetBool("DaoDat",true);
             Vector3Int cellPos=tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Grass.GetTile(cellPos);
-            if (crrTileBase = tb_Grass)
+            if (crrTileBase != null && crrTileBase.Equals(tb_Grass))
             {
                 tm_Grass.SetTile(cellPos, null);
+                tm_Ground.SetTile(cellPos, tb_Ground);
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Ground);
             }
         }
@@ -50,19 +51,21 @@ public class FarmingController : MonoBehaviour
         {
             animation.SetBool("TrongCay", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
-            TileBase crrTileBase = tm_Grass.GetTile(cellPos);
-            if (crrTileBase == null)
+            TileBase crrTileBase = tm_Ground.GetTile(cellPos);
+            if (crrTileBase != null && crrTileBase.Equals(tb_Ground))
             {
                 StartCoroutine(GrowPlant(cellPos , tm_Forest, lst_Potato));
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
+                
             }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
+            //Animation
             animation.SetBool("ThuHoach", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Forest.GetTile(cellPos);
-            if (crrTileBase = lst_Potato[4])
+            if (crrTileBase != null && crrTileBase.Equals(lst_Potato[4]))
             {
                 //set lai phan dat
                 tm_Grass.SetTile(cellPos, tb_Grass);
@@ -72,8 +75,8 @@ public class FarmingController : MonoBehaviour
                 InventoryItems itemPotato = new InventoryItems();
                 itemPotato.name = "Khoai tay";
                 itemPotato.description = "Cu khoai tay";
-
                 recyclableInventoryManager.AddInventoryItem(itemPotato);
+                
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
             }
         }
