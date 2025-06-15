@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8439ed726599d349aee1381b50cd8a0, type: 3}
+  m_Name: Potato
+  m_EditorClassIdentifier: 
+  seedName: "Khoai t\xE2y"
+  icon: {fileID: 21300000, guid: f140b8cf7b2cb44c5bf34bb9bb3292f4, type: 3}
+  growthStages:
+  - {fileID: 11400000, guid: 6fc36461c0f44cd4f94b541d0c108dc0, type: 2}
+  - {fileID: 11400000, guid: 44839743ce07a264e919eca16598e244, type: 2}
+  - {fileID: 11400000, guid: 42413e3fe3a15dd4d91031fd2c36a94c, type: 2}
+  - {fileID: 11400000, guid: c35c02593f44d2042853b85f8a46780a, type: 2}
+  - {fileID: 11400000, guid: 124dde1514d6e144b93813ddfed98b8f, type: 2}
+  harvestTile: {fileID: 11400000, guid: 124dde1514d6e144b93813ddfed98b8f, type: 2}
+  productName: "C\u1EE7 khoai t\xE2y"

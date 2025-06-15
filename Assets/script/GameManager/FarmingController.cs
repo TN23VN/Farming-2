@@ -7,6 +7,7 @@ public class FarmingController : MonoBehaviour
 {
     public Animator animation;
     public Notification myNotification;
+    public InventoryManager inventoryManager;
 
     public Tilemap tm_Ground;
     public Tilemap tm_Grass;
@@ -16,16 +17,10 @@ public class FarmingController : MonoBehaviour
     public TileBase tb_Grass;
     public TileBase tb_Forest;
 
-    public List<TileBase> lst_Potato;
-    //public List<TileBase> lst_ThuHoach;
-
-    private RecyclableInventoryManager recyclableInventoryManager;
-
     public TileMapManager tileMapManager;
     private void Start()
     {
-        recyclableInventoryManager = GameObject.Find("InventoryManager").GetComponent<RecyclableInventoryManager>();
-        animation = GetComponent<Animator>();
+        
     }
 
     void Update()
@@ -40,6 +35,7 @@ public class FarmingController : MonoBehaviour
             animation.SetBool("DaoDat",true);
             Vector3Int cellPos=tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Grass.GetTile(cellPos);
+
             if (crrTileBase != null && crrTileBase.Equals(tb_Grass))
             {
                 tm_Grass.SetTile(cellPos, null);
@@ -57,15 +53,25 @@ public class FarmingController : MonoBehaviour
             animation.SetBool("TrongCay", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Ground.GetTile(cellPos);
+
             if (crrTileBase != null && crrTileBase.Equals(tb_Ground))
             {
-                StartCoroutine(GrowPlant(cellPos , tm_Forest, lst_Potato));
-                tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
-                
+                // Lấy hạt giống đầu tiên trong inventory
+                InventoryItem seedItem = inventoryManager.GetFirstSeedItem();
+                if (seedItem != null)
+                {
+                    StartCoroutine(GrowPlant(cellPos, tm_Forest, seedItem.seedData));
+                    tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
+                    inventoryManager.RemoveItem(seedItem.itemName, 1);
+                }
+                else
+                {
+                    myNotification.ShowMessage("Bạn không có hạt giống!");
+                }
             }
             else
             {
-                myNotification.ShowMessage("Không thể trồng cây như vậy!");
+                myNotification.ShowMessage("Không thể trồng cây ở đây!");
             }
         }
         if (Input.GetKeyDown(KeyCode.M))
@@ -74,24 +80,21 @@ public class FarmingController : MonoBehaviour
             animation.SetBool("ThuHoach", true);
             Vector3Int cellPos = tm_Ground.WorldToCell(transform.position);
             TileBase crrTileBase = tm_Forest.GetTile(cellPos);
-            if (crrTileBase != null && crrTileBase.Equals(lst_Potato[4]))
+            SeedData plantedSeed = tileMapManager.GetPlantedSeed(cellPos.x, cellPos.y);
+            if (plantedSeed != null && crrTileBase.Equals(plantedSeed.growthStages[^1])) // Giai đoạn cuối
             {
-                //set lai phan dat
-                tm_Grass.SetTile(cellPos, tb_Grass);
-                //thu hoach hoa
                 tm_Forest.SetTile(cellPos, null);
-                //them vao tui do
-                InventoryItems itemPotato = new InventoryItems();
-                itemPotato.name = "Khoai tay";
-                itemPotato.description = "Cu khoai tay";
-                recyclableInventoryManager.AddInventoryItem(itemPotato);
-                
+                tm_Grass.SetTile(cellPos, tb_Grass);
+
+                InventoryItem product = new InventoryItem(plantedSeed.productName, plantedSeed.icon, 1 , plantedSeed);
+                inventoryManager.AddItem(product);
+
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
+                tileMapManager.ClearPlantedSeed(cellPos.x, cellPos.y);
             }
             else
             {
                 myNotification.ShowMessage("Không thể thu hoạch!");
-                Debug.Log("khong the");
             }
         }
         if (Input.GetKeyUp(KeyCode.C)) 
@@ -108,14 +111,17 @@ public class FarmingController : MonoBehaviour
         }
     }
 
-    public IEnumerator GrowPlant(Vector3Int cellPos, Tilemap tilemap, List<TileBase> lstTileBase)
+    public IEnumerator GrowPlant(Vector3Int cellPos, Tilemap tilemap, SeedData seed)
     {
-        int crrStage = 0;
-        while (crrStage < lstTileBase.Count)
+        int stage = 0;
+        while (stage < seed.growthStages.Count)
         {
-            tilemap.SetTile(cellPos, lstTileBase[crrStage]);
+            tilemap.SetTile(cellPos, seed.growthStages[stage]);
             yield return new WaitForSeconds(10);
-            crrStage++;
+            stage++;
         }
+
+        // Ghi lại seed tại vị trí này để dùng khi thu hoạch
+        tileMapManager.SetPlantedSeed(cellPos.x, cellPos.y, seed);
     }
 }

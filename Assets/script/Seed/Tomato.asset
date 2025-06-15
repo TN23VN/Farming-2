@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8439ed726599d349aee1381b50cd8a0, type: 3}
+  m_Name: Tomato
+  m_EditorClassIdentifier: 
+  seedName: "C\xE0 chua"
+  icon: {fileID: 21300000, guid: cfbba8cf50d164f2182e614389427136, type: 3}
+  growthStages:
+  - {fileID: 11400000, guid: 2ad7886a1143bee428b1a2a5e03dd3f4, type: 2}
+  - {fileID: 11400000, guid: f58db440ac3b7b6439c50411ac9e83d8, type: 2}
+  - {fileID: 11400000, guid: 824cc384caf88d246aad48a65d03285b, type: 2}
+  - {fileID: 11400000, guid: 8659891dbe2815741b4a4c9f62f9f3b7, type: 2}
+  - {fileID: 11400000, guid: 80628e854073c8d44902c10af668832b, type: 2}
+  harvestTile: {fileID: 11400000, guid: 80628e854073c8d44902c10af668832b, type: 2}
+  productName: "Qu\u1EA3 c\xE0 chua"
