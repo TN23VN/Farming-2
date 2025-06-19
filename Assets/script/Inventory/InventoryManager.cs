@@ -142,4 +142,17 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log("Đã sắp xếp kho đồ.");
     }
+
+    public bool HasItem(string itemName)
+    {
+        foreach (var slot in slots)
+        {
+            InventoryItem item = slot.GetItem();
+            if (item != null && item.itemName == itemName && item.quantity > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
