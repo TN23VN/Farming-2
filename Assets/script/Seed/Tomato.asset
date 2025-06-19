@@ -20,5 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 824cc384caf88d246aad48a65d03285b, type: 2}
   - {fileID: 11400000, guid: 8659891dbe2815741b4a4c9f62f9f3b7, type: 2}
   - {fileID: 11400000, guid: 80628e854073c8d44902c10af668832b, type: 2}
-  harvestTile: {fileID: 11400000, guid: 80628e854073c8d44902c10af668832b, type: 2}
+  growthTimePerStage: 10
   productName: "Qu\u1EA3 c\xE0 chua"
+  productIcon: {fileID: 21300000, guid: 829edba0aa42246a2a95e69096ea5862, type: 3}
+  minYield: 3
+  maxYield: 7
