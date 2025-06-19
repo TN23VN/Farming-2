@@ -62,6 +62,7 @@ public class FarmingController : MonoBehaviour
                 {
                     StartCoroutine(GrowPlant(cellPos, tm_Forest, seedItem.seedData));
                     tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Potato);
+
                     inventoryManager.RemoveItem(seedItem.itemName, 1);
                 }
                 else
@@ -86,7 +87,8 @@ public class FarmingController : MonoBehaviour
                 tm_Forest.SetTile(cellPos, null);
                 tm_Grass.SetTile(cellPos, tb_Grass);
 
-                InventoryItem product = new InventoryItem(plantedSeed.productName, plantedSeed.icon, 1 , plantedSeed);
+                int harvestCount = Random.Range(plantedSeed.minYield, plantedSeed.maxYield + 1);
+                InventoryItem product = new InventoryItem(plantedSeed.productName, plantedSeed.productIcon, harvestCount, null);
                 inventoryManager.AddItem(product);
 
                 tileMapManager.SetStateForTilemapDetail(cellPos.x, cellPos.y, TilemapState.Grass);
@@ -117,7 +119,7 @@ public class FarmingController : MonoBehaviour
         while (stage < seed.growthStages.Count)
         {
             tilemap.SetTile(cellPos, seed.growthStages[stage]);
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(seed.growthTimePerStage);
             stage++;
         }
 

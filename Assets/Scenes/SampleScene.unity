@@ -5356,7 +5356,7 @@ MonoBehaviour:
   - {fileID: 234029616}
   - {fileID: 1366118575}
   - {fileID: 490009774}
-  sourceSlot: {fileID: 0}
+  sourceSlot: {fileID: 1814572483}
   inventoryUI: {fileID: 1258290071}
   potatoSeedData: {fileID: 11400000, guid: 0ef42c5f68d46964b8bd53dd17cde8f3, type: 2}
   tomatoSeedData: {fileID: 11400000, guid: f8f9cf9c1e05feb419eed1c34daf558b, type: 2}

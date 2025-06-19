@@ -24,6 +24,11 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SortInventory();
+        }
     }
     public void AddItem(InventoryItem newItem)
     {
@@ -77,7 +82,7 @@ public class InventoryManager : MonoBehaviour
         foreach (var slot in slots)
         {
             var item = slot.GetItem();
-            if (item != null && item.itemName == itemName)
+            if (item != null && string.Equals(item.itemName, itemName, System.StringComparison.OrdinalIgnoreCase))
             {
                 item.quantity -= count;
                 if (item.quantity <= 0)
@@ -87,5 +92,54 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void SortInventory()
+    {
+        // Gom hết các item đang có
+        List<InventoryItem> allItems = new List<InventoryItem>();
+
+        foreach (var slot in slots)
+        {
+            var item = slot.GetItem();
+            if (item != null)
+            {
+                allItems.Add(item);
+                slot.ClearSlot();
+            }
+        }
+
+        // Gom item cùng tên lại (stack item)
+        Dictionary<string, InventoryItem> merged = new Dictionary<string, InventoryItem>();
+        foreach (var item in allItems)
+        {
+            if (merged.ContainsKey(item.itemName))
+            {
+                merged[item.itemName].quantity += item.quantity;
+            }
+            else
+            {
+                merged[item.itemName] = new InventoryItem(item.itemName, item.icon, item.quantity, item.seedData);
+            }
+        }
+
+        // Đưa lại vào slot từ đầu
+        int index = 0;
+        foreach (var kv in merged)
+        {
+            if (index < slots.Length)
+            {
+                slots[index].SetItem(kv.Value);
+                index++;
+            }
+        }
+
+        // Những slot còn lại để trống
+        for (int i = index; i < slots.Length; i++)
+        {
+            slots[i].ClearSlot();
+        }
+
+        Debug.Log("Đã sắp xếp kho đồ.");
     }
 }
