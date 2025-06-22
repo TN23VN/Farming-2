@@ -7,10 +7,13 @@ public class ShopManager : MonoBehaviour
     public GameObject shopItemUIPrefab;
     public Transform contentPanel;
     public List<ShopItemData> availableItems;
+
     public InventoryManager inventoryManager;
+    private FirebaseDatabaseManager databaseManager;
 
     void Start()
     {
+        databaseManager = GameObject.Find("DatabaseManager").GetComponent<FirebaseDatabaseManager>();
         PopulateShop();
     }
 
@@ -35,7 +38,7 @@ public class ShopManager : MonoBehaviour
 
             inventoryManager.AddItem(item);
 
-            SaveUserToFirebase();
+            databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
         }
         else
         {
@@ -50,18 +53,7 @@ public class ShopManager : MonoBehaviour
             inventoryManager.RemoveItem(data.itemName, 1);
             LoadDataManager.userInGame.Gold += data.sellPrice;
 
-            SaveUserToFirebase();
+            databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
         }
-    }
-
-    private void SaveUserToFirebase()
-    {
-        string userId = LoadDataManager.firebaseUser.UserId;
-        string json = LoadDataManager.userInGame.ToString();
-        FirebaseDatabase.DefaultInstance
-            .RootReference
-            .Child("Users")
-            .Child(userId)
-            .SetRawJsonValueAsync(json);
     }
 }

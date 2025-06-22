@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Firebase;
-using Firebase.Auth;
 using Firebase.Database;
-using Firebase.Extensions;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
