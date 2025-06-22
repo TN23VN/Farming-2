@@ -10,7 +10,7 @@ public class LoadingManager : MonoBehaviour
     
     public GameObject progressBar;
     public Text txtPercent;
-    private float fixedLoadTime = 3f;
+    private float fixedLoadTime = 1f;
 
     private void Start()
     {

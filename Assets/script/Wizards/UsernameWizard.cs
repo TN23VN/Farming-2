@@ -49,4 +49,11 @@ public class UsernameWizard : MonoBehaviour
             player.SetActive(true);
         }
     }
+
+    public void ResetUI()
+    {
+        username.text = LoadDataManager.userInGame.Name;
+        gold.text = "Gold: " + LoadDataManager.userInGame.Gold.ToString();
+        diamond.text = "Diamond: " + LoadDataManager.userInGame.Diamond.ToString();
+    }
 }

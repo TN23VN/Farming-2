@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Firebase;
-using Firebase.Auth;
 using Firebase.Database;
-using Firebase.Extensions;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
@@ -113,7 +109,7 @@ public class TileMapManager : MonoBehaviour
                 LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].y == y)
             {
                 LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].tilemapState = state;
-                databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
+                //databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
             }
         }
     }

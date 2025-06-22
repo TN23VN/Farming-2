@@ -15,8 +15,8 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        AddItem(new InventoryItem("Khoai tây", potatoSeedData.icon, 1, potatoSeedData));
-        AddItem(new InventoryItem("Cà chua", tomatoSeedData.icon, 3, tomatoSeedData));
+        //AddItem(new InventoryItem("Khoai tây", potatoSeedData.icon, 1, potatoSeedData));
+        //AddItem(new InventoryItem("Cà chua", tomatoSeedData.icon, 3, tomatoSeedData));
     }
     void Update()
     {

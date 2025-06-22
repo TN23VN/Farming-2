@@ -15,7 +15,6 @@ public class FarmingController : MonoBehaviour
 
     public TileBase tb_Ground;
     public TileBase tb_Grass;
-    public TileBase tb_Forest;
 
     public TileMapManager tileMapManager;
     private void Start()
