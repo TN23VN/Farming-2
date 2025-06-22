@@ -11,4 +11,6 @@ Trò chơi nông trại lấy cảm hứng từ Stardew Valley được phát tr
 - Mua bán hạt giống, nông sản trong hệ thống cửa hàng
 - Kiếm tiền, nâng cấp trang trại và trở thành tỷ phú nông dân!
 # Tình trạng dự án
-Dự án đang trong quá trình hoàn thiện
+- Dự án đang trong quá trình hoàn thiện
+- Bạn có thể download nó và chơi thử nó tại: https://drive.google.com/drive/folders/1F3GA3hFtlI18Rtk6Dfd5Ubs-L2V85nwf?usp=sharing
+- Tải về > Giải nén > Chạy file Farming 2.exe
