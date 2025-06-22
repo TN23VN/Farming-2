@@ -14,6 +14,7 @@ public class Tutorial : MonoBehaviour
     public Button btnOK2;
     public Button btnMusic;
     public Button btnSoundEffect;
+    public Button btnThoat;
 
     [Header("Audio button")]
     public AudioSource audioSource;
@@ -29,7 +30,7 @@ public class Tutorial : MonoBehaviour
         btnOK2.onClick.AddListener(() => BackgroundSetting.SetActive(false));
         
         btnMusic.onClick.AddListener(ToggleAudio);
-
+        btnThoat.onClick.AddListener(()=>Application.Quit());
     }
 
     void ToggleAudio()
