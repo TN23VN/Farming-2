@@ -109,7 +109,7 @@ public class TileMapManager : MonoBehaviour
                 LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].y == y)
             {
                 LoadDataManager.userInGame.MapInGame.lstTileMapDetail[i].tilemapState = state;
-                databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
+                //databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
             }
         }
     }

@@ -28,7 +28,7 @@ public class LoadDataManager : MonoBehaviour
     }
     public void GetUserInGame()
     {
-        reference.Child("Users").Child(firebaseUser.UserId).GetValueAsync().ContinueWithOnMainThread(task =>
+        reference.Child("Users").Child("Users").Child(firebaseUser.UserId).GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCompleted)
             {

@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using Firebase.Database;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
     public GameObject shopItemUIPrefab;
     public Transform contentPanel;
     public List<ShopItemData> availableItems;
+    public Text txtGold;
+    public Text txtDiamond;
+
 
     public InventoryManager inventoryManager;
     private FirebaseDatabaseManager databaseManager;
@@ -37,8 +41,10 @@ public class ShopManager : MonoBehaviour
                 : new InventoryItem(data.itemName, data.icon, 1);
 
             inventoryManager.AddItem(item);
-
+            
             databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
+            txtGold.text = "Gold: " + LoadDataManager.userInGame.Gold.ToString();
+            txtDiamond.text = "Diamond: " + LoadDataManager.userInGame.Diamond.ToString();
         }
         else
         {
@@ -52,8 +58,9 @@ public class ShopManager : MonoBehaviour
         {
             inventoryManager.RemoveItem(data.itemName, 1);
             LoadDataManager.userInGame.Gold += data.sellPrice;
-
             databaseManager.WriteDatabase("Users/" + LoadDataManager.firebaseUser.UserId, LoadDataManager.userInGame.ToString());
+            txtGold.text = "Gold: " + LoadDataManager.userInGame.Gold.ToString();
+            txtDiamond.text = "Diamond: " + LoadDataManager.userInGame.Diamond.ToString();
         }
     }
 }
