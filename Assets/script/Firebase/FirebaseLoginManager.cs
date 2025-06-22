@@ -9,12 +9,15 @@ public class FirebaseLoginManager : MonoBehaviour
     [Header("Dang ky")]
     public InputField ipRegisterEmail;
     public InputField ipRegisterPassword;
+    public InputField ipRegisterPassword2;
     public Button buttonRegister;
+    public Text DK_Notify;
 
     [Header("Dang nhap")]
     public InputField ipLoginEmail;
     public InputField ipLoginPassword;
     public Button buttonLogin;
+    public Text DN_Notify;
 
     [Header("Switch form")]
     public Button buttonMoveToLogin;
@@ -40,30 +43,38 @@ public class FirebaseLoginManager : MonoBehaviour
     {
         string email = ipRegisterEmail.text;
         string pass = ipRegisterPassword.text;
-        auth.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task=>
+        string pass2 = ipRegisterPassword2.text;
+        if(pass == pass2)
         {
-            if (task.IsCanceled)
+            auth.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
             {
-                Debug.Log("Huy dang ky");
-                return;
-            }
-            else if (task.IsFaulted) 
-            {
-                Debug.Log("Dang ky that bai");
-                return;
-            }
-            else if (task.IsCompleted)
-            {
-                Debug.Log("Dang ky thanh cong");
-                Map mapInGame = new Map();  
-                User userInGame = new User("",100,50,mapInGame);
-                FirebaseUser firebaseUser = task.Result.User;
-                databaseManager.WriteDatabase("Users/"+ firebaseUser.UserId, userInGame.ToString());
+                if (task.IsCanceled)
+                {
+                    DK_Notify.text = "Huy dang ky";
+                    return;
+                }
+                else if (task.IsFaulted)
+                {
+                    DK_Notify.text = "Dang ky that bai";
+                    return;
+                }
+                else if (task.IsCompleted)
+                {
+                    DK_Notify.text = "Dang ky thanh cong";
+                    Map mapInGame = new Map();
+                    User userInGame = new User("", 100, 50, mapInGame);
+                    FirebaseUser firebaseUser = task.Result.User;
+                    databaseManager.WriteDatabase("Users/" + firebaseUser.UserId, userInGame.ToString());
 
-                LoadingManager.next_scene = "SampleScene";
-                SceneManager.LoadScene("LoadingScene");
-            }
-        });
+                    LoadingManager.next_scene = "SampleScene";
+                    SceneManager.LoadScene("LoadingScene");
+                }
+            });
+        }
+        else
+        {
+            DK_Notify.text = "Mat khau khong khop";
+        }
 
     }
 
@@ -75,17 +86,17 @@ public class FirebaseLoginManager : MonoBehaviour
         {
             if (task.IsCanceled)
             {
-                Debug.Log("Huy dang nhap");
+                DN_Notify.text = "Huy dang nhap";
                 return;
             }
             else if (task.IsFaulted)
             {
-                Debug.Log("Dang nhap that bai");
+                DN_Notify.text = "Dang nhap that bai";
                 
             }
             else if (task.IsCompleted)
             {
-                Debug.Log("Dang nhap thanh cong");
+                DN_Notify.text = "Dang nhap thanh cong";
                 FirebaseUser user = task.Result.User;
 
                 LoadingManager.next_scene = "SampleScene";

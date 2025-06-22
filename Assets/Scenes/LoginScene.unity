@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &173918095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9198322692002466082, guid: 959cf3f46cfa71f41a64a75d02becd35, type: 3}
+  m_PrefabInstance: {fileID: 183718715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &183718715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228,6 +239,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 959cf3f46cfa71f41a64a75d02becd35, type: 3}
+--- !u!114 &193562505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6426787073784572676, guid: 959cf3f46cfa71f41a64a75d02becd35, type: 3}
+  m_PrefabInstance: {fileID: 183718715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &259164720 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5710844003975043462, guid: 959cf3f46cfa71f41a64a75d02becd35, type: 3}
@@ -383,6 +405,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1891490326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2433158878495274772, guid: 959cf3f46cfa71f41a64a75d02becd35, type: 3}
+  m_PrefabInstance: {fileID: 183718715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1894719306
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,10 +540,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ipRegisterEmail: {fileID: 2043831468}
   ipRegisterPassword: {fileID: 388238455}
+  ipRegisterPassword2: {fileID: 193562505}
   buttonRegister: {fileID: 1510329567}
+  DK_Notify: {fileID: 1891490326}
   ipLoginEmail: {fileID: 259164720}
   ipLoginPassword: {fileID: 1202626365}
   buttonLogin: {fileID: 2090828609}
+  DN_Notify: {fileID: 173918095}
   buttonMoveToLogin: {fileID: 1206327733}
   buttonMoveToRegister: {fileID: 1812851839}
   loginForm: {fileID: 1552653294}
